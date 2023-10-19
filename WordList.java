@@ -28,17 +28,25 @@ public class WordList {
         return nodeCount;
     }
 
+
     // return the number of occurrences of word s in the input file
     public int contains(String s) {
-        /* enter you code! */
+        Node temp = first;
+        while(temp.next != null){
+            if(temp.str.equals(s)){
+                return temp.count;
+            }
+            temp = temp.next;
+        }
         // s not found
         return 0;
     }
 
+
     // add one more occurrence of word s; insert new node if s is not in the doubly linked list
     // the list should be adjusted so that the words appear in decreasing number of occurrences 
     public void insert(String s) {
-        /* enter you code! */
+        
     }
 
     // delete word s from the doubly linked list
