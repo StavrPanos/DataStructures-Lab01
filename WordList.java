@@ -42,11 +42,32 @@ public class WordList {
         return 0;
     }
 
-
     // add one more occurrence of word s; insert new node if s is not in the doubly linked list
     // the list should be adjusted so that the words appear in decreasing number of occurrences 
     public void insert(String s) {
-        
+        Node temp = new Node(s);
+
+        //If it's the first object or the one with higher count
+        if(first == null || temp.count > first.count){
+            //Insert at the beginning
+            temp.next = first;
+            if(first != null){
+                first.previous = temp;
+            }
+            first = temp;
+        }else{
+            Node current = first;
+            while(current.next != null && current.next.count > temp.count){
+                current = current.next;
+            }
+
+            temp.next = current.next;
+            if(current.next != null){
+                current.next.previous = temp;
+            }
+            current.next = temp;
+            temp.previous = current;
+        }
     }
 
     // delete word s from the doubly linked list
@@ -67,7 +88,11 @@ public class WordList {
     
     // print first k strings of the doubly linked list
     public void print(int k) {
-        /* enter you code! */
+        Node temp = first;
+        while(temp.next != null){
+            System.out.println(temp.str);
+            temp = temp.next;
+        }
     }
     
     // do not modify main
@@ -83,47 +108,49 @@ public class WordList {
             if (s.isEmpty()) continue;
             L.insert(s);
         }
-        long endTime = System.currentTimeMillis();
-        long listTime = endTime - startTime;
-        System.out.println("linked list construction time = " + listTime);
-        System.out.println("number of linked list nodes = " + L.nodeCount());
-        System.out.println("");
 
-        System.out.println("contains 'and' " + L.contains("and") + " times");
-        System.out.println("contains 'astonished' " + L.contains("astonished") + " times");
-        System.out.println("contains 'boat' " + L.contains("boat") + " times");
-        System.out.println("contains 'path' " + L.contains("path") + " times");
-        System.out.println("contains 'the' " + L.contains("the") + " times");
-        System.out.println("contains 'train' " + L.contains("train") + " times");
-        System.out.println("contains 'tom' " + L.contains("tom") + " times");
-        System.out.println("contains 'wondered' " + L.contains("wondered") + " times");
-        System.out.println("");
+        L.print(3);
+        // long endTime = System.currentTimeMillis();
+        // long listTime = endTime - startTime;
+        // System.out.println("linked list construction time = " + listTime);
+        // System.out.println("number of linked list nodes = " + L.nodeCount());
+        // System.out.println("");
 
-        System.out.println("\nthe 10 most frequent words are:");
-        L.print(10);
+        // System.out.println("contains 'and' " + L.contains("and") + " times");
+        // System.out.println("contains 'astonished' " + L.contains("astonished") + " times");
+        // System.out.println("contains 'boat' " + L.contains("boat") + " times");
+        // System.out.println("contains 'path' " + L.contains("path") + " times");
+        // System.out.println("contains 'the' " + L.contains("the") + " times");
+        // System.out.println("contains 'train' " + L.contains("train") + " times");
+        // System.out.println("contains 'tom' " + L.contains("tom") + " times");
+        // System.out.println("contains 'wondered' " + L.contains("wondered") + " times");
+        // System.out.println("");
+
+        // System.out.println("\nthe 10 most frequent words are:");
+        // L.print(10);
         
-        String s = L.select(9);
-        System.out.println("deleting '" + s +"'");
-        L.delete(s);
+        // String s = L.select(9);
+        // System.out.println("deleting '" + s +"'");
+        // L.delete(s);
   
-        s = L.select(8);
-        System.out.println("deleting '" + s +"'");
-        L.delete(s);
+        // s = L.select(8);
+        // System.out.println("deleting '" + s +"'");
+        // L.delete(s);
         
-        s = L.select(7);
-        System.out.println("deleting '" + s +"'");
-        L.delete(s);
+        // s = L.select(7);
+        // System.out.println("deleting '" + s +"'");
+        // L.delete(s);
         
-        System.out.println("\nthe remaining 10 most frequent words are:");
-        L.print(10);
+        // System.out.println("\nthe remaining 10 most frequent words are:");
+        // L.print(10);
         
-        System.out.println("\nsorting words in lexicographical order");
-        L.lexOrder();
-        System.out.println("first 10 words in lexicographical order are:");
-        L.print(10);
+        // System.out.println("\nsorting words in lexicographical order");
+        // L.lexOrder();
+        // System.out.println("first 10 words in lexicographical order are:");
+        // L.print(10);
         
-        endTime = System.currentTimeMillis();
-        long totalTime = endTime - startTime;
-        System.out.println("\ntotal running time = " + totalTime);
+        // endTime = System.currentTimeMillis();
+        // long totalTime = endTime - startTime;
+        // System.out.println("\ntotal running time = " + totalTime);
     }
 }
