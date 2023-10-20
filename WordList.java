@@ -67,6 +67,44 @@ public class WordList {
         }
         temp.next = newNode;
         newNode.previous = temp;
+
+        //Now we sort the list
+        boolean swapped;
+        Node current;
+        Node last = null;
+
+        do{
+            swapped = false;
+            current = first;
+
+            while(current.next != last){
+                if(current.count < current.next.count){
+                    //Swap the 2 nodes
+                    if(current.previous != null){
+                        current.previous.next = current.next;
+                    }else{
+                        first = current.next;
+                    }
+                    if(current.next != null){
+                        current.next.previous = current.previous;
+                    }
+
+                    Node tempNode = current.next.next;
+                    current.next.next = current;
+                    current.next.previous = current.previous;
+                    current.previous = current.next;
+                    current.next = tempNode;
+
+                    if(tempNode != null){
+                        tempNode.previous = current;
+                    }
+
+                    swapped = true;
+                }
+                current = current.next;
+            }
+            last = current;
+        }while(swapped);
     }
 
     // delete word s from the doubly linked list
