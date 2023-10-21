@@ -46,27 +46,33 @@ public class WordList {
     // the list should be adjusted so that the words appear in decreasing number of occurrences 
     public void insert(String s) {
         Node newNode = new Node(s);
+        boolean isSorted = false;
+
         //Insert the first element
         if(first == null){
             first = newNode;
+            isSorted = true;//It has onl 1 element
             return;
         }
-        //Check if s is already in list
-        Node temp = first;
-        while(temp != null){
-            if(temp.str.equals(s)){
-                temp.count++;
+        //Insert other elements
+        Node currentNode = first;
+        while(currentNode != null){
+            //If String exists in list
+            if(currentNode.str.equals(s)){
+                currentNode.count++;
                 return;
             }
-            temp = temp.next;
+            //If its not then move to the next Node
+            if (currentNode.next != null) {
+                currentNode = currentNode.next;
+            } else {
+                // At the end of the list, add the new element
+                newNode.previous = currentNode;
+                currentNode.next = newNode;
+                return;
+            }
         }
-        //If it's not then add it at then end
-        temp = first;
-        while (temp.next != null) {
-            temp = temp.next;
-        }
-        temp.next = newNode;
-        newNode.previous = temp;        
+
     }
 
     // delete word s from the doubly linked list
@@ -89,7 +95,7 @@ public class WordList {
     public void print(int k) {
         Node temp = first;
         while(temp != null){
-            System.out.println(temp.str);
+            System.out.println(temp.str + "    " + temp.count);
             temp = temp.next;
         }
     }
