@@ -80,9 +80,10 @@ public class WordList {
                 return;
             }
         }
+        
         //Sort if needed
         if(!isSorted){
-            while(currentNode.previous != null || currentNode.count <= currentNode.previous.count){
+            while(currentNode.count > currentNode.previous.count){
                 System.out.println("The current Node is: " + currentNode.str);
                 System.out.println();
                 System.out.println("The previous Node is " + currentNode.previous.str);
@@ -93,7 +94,6 @@ public class WordList {
                 if(currentNode.next != null){
                     currentNode.next.previous = tempNode;
                 }
-
                 tempNode.next = currentNode;
                 currentNode.next = tempNode;
                 //If currentNode is not the head
@@ -106,6 +106,7 @@ public class WordList {
                 if(currentNode.next == null){
                     currentNode.next = tempNode;
                 }
+                currentNode = tempNode;
             }
         }
     }
@@ -127,28 +128,30 @@ public class WordList {
     
     // print first k strings of the doubly linked list
     public void print(int k) {
-        // Node temp = first;
-        // while(temp != null){
-        //     System.out.println(temp.str + "    " + temp.count);
-        //     temp = temp.next;
-        // }
-        System.out.println(first.next.str);
+        Node temp = first;
+        while(temp != null){
+            System.out.println(temp.str + "    " + temp.count);
+            temp = temp.next;
+        }
     }
     
     // do not modify main
     public static void main(String[] args) {
-        System.out.println("Test WordList");
+        // System.out.println("Test WordList");
 
-        WordList L = new WordList();
+         WordList L = new WordList();
 
-        In.init();
-        long startTime = System.currentTimeMillis();
-        while (!In.empty()) {
-            String s = In.getString();
-            if (s.isEmpty()) continue;
-            L.insert(s);
-        }
-
+        // In.init();
+        // long startTime = System.currentTimeMillis();
+        // while (!In.empty()) {
+        //     String s = In.getString();
+        //     if (s.isEmpty()) continue;
+        //     L.insert(s);
+        // }
+        L.insert("the");
+        L.insert("adventures");
+        L.insert("of");
+        L.insert("of");
         L.print(3);
         // long endTime = System.currentTimeMillis();
         // long listTime = endTime - startTime;
