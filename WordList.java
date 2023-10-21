@@ -1,6 +1,8 @@
 
 import java.io.*;
 
+import javax.swing.event.SwingPropertyChangeSupport;
+
 public class WordList {
 
     private class Node {
@@ -46,7 +48,7 @@ public class WordList {
     // the list should be adjusted so that the words appear in decreasing number of occurrences 
     public void insert(String s) {
         Node newNode = new Node(s);
-        boolean isSorted = false;
+        boolean isSorted = true;
 
         //Insert the first element
         if(first == null){
@@ -60,7 +62,13 @@ public class WordList {
             //If String exists in list
             if(currentNode.str.equals(s)){
                 currentNode.count++;
-                return;
+                if(currentNode == first){
+                    return;
+                }
+                if(currentNode.count > currentNode.previous.count){
+                    isSorted = false;
+                    break;
+                }
             }
             //If its not then move to the next Node
             if (currentNode.next != null) {
@@ -72,9 +80,35 @@ public class WordList {
                 return;
             }
         }
+        //Sort if needed
+        if(!isSorted){
+            while(currentNode.previous != null || currentNode.count <= currentNode.previous.count){
+                System.out.println("The current Node is: " + currentNode.str);
+                System.out.println();
+                System.out.println("The previous Node is " + currentNode.previous.str);
+                Node tempNode = currentNode.previous;
+                currentNode.previous = tempNode.previous;
+                tempNode.next = currentNode.next;
+                //If currentNode is not the tail
+                if(currentNode.next != null){
+                    currentNode.next.previous = tempNode;
+                }
 
+                tempNode.next = currentNode;
+                currentNode.next = tempNode;
+                //If currentNode is not the head
+                if(tempNode.previous != null){
+                    tempNode.previous.next = currentNode;
+                }else{
+                    first = currentNode; //Update the head
+                }
+
+                if(currentNode.next == null){
+                    currentNode.next = tempNode;
+                }
+            }
+        }
     }
-
     // delete word s from the doubly linked list
     public void delete(String s) {
         /* enter you code! */
@@ -93,11 +127,12 @@ public class WordList {
     
     // print first k strings of the doubly linked list
     public void print(int k) {
-        Node temp = first;
-        while(temp != null){
-            System.out.println(temp.str + "    " + temp.count);
-            temp = temp.next;
-        }
+        // Node temp = first;
+        // while(temp != null){
+        //     System.out.println(temp.str + "    " + temp.count);
+        //     temp = temp.next;
+        // }
+        System.out.println(first.next.str);
     }
     
     // do not modify main
