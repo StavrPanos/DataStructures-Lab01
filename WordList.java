@@ -83,7 +83,7 @@ public class WordList {
         
         //Sort if needed
         if(!isSorted){
-            while(currentNode.count > currentNode.previous.count){
+            while(currentNode.previous != null && currentNode.count > currentNode.previous.count){
                 System.out.println("The current Node is: " + currentNode.str);
                 System.out.println();
                 System.out.println("The previous Node is " + currentNode.previous.str);
