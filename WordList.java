@@ -1,7 +1,4 @@
-
 import java.io.*;
-
-import javax.swing.event.SwingPropertyChangeSupport;
 
 public class WordList {
 
@@ -81,35 +78,47 @@ public class WordList {
             }
         }
         
-        //Sort if needed
+        // Sort if needed
         if(!isSorted){
             while(currentNode.previous != null && currentNode.count > currentNode.previous.count){
-                System.out.println("The current Node is: " + currentNode.str);
-                System.out.println();
-                System.out.println("The previous Node is " + currentNode.previous.str);
-                Node tempNode = currentNode.previous;
-                currentNode.previous = tempNode.previous;
-                tempNode.next = currentNode.next;
-                //If currentNode is not the tail
-                if(currentNode.next != null){
-                    currentNode.next.previous = tempNode;
-                }
-                tempNode.next = currentNode;
-                currentNode.next = tempNode;
-                //If currentNode is not the head
-                if(tempNode.previous != null){
-                    tempNode.previous.next = currentNode;
-                }else{
-                    first = currentNode; //Update the head
+                if(currentNode.next == null && currentNode.previous == first){
+                    System.out.println("Entered 1st if");
+                    currentNode.next = currentNode.previous;
+                    currentNode.next.previous = currentNode;
+                    first = currentNode;
+                    currentNode.previous = null;
+                    currentNode.next.next = null;
+                    continue;
                 }
 
                 if(currentNode.next == null){
-                    currentNode.next = tempNode;
+                    currentNode.previous.next = currentNode.next;
+                    currentNode.next = currentNode.previous;
+                    currentNode.next.next.previous = currentNode.next;
+                    currentNode.previous.previous = currentNode;
+                    currentNode.previous = null;
+                    continue;
                 }
-                currentNode = tempNode;
+    
+                if(currentNode.previous.previous == null){
+                    currentNode.previous.next = currentNode.next;
+                    currentNode.next = currentNode.previous;
+                    currentNode.next.next.previous = currentNode.next;
+                    currentNode.previous.previous = currentNode;
+                    currentNode = currentNode.previous;
+                    currentNode.previous = null;
+                    continue;
+                }
+    
+                currentNode.previous.previous.next = currentNode;
+                currentNode.previous.next = currentNode.next;
+                currentNode.next = currentNode.previous;
+                currentNode.previous = currentNode.next.previous;
+                currentNode.next.previous = currentNode;
+                currentNode.next.next.previous = currentNode.next;
             }
         }
-    }
+    }   
     // delete word s from the doubly linked list
     public void delete(String s) {
         /* enter you code! */
@@ -139,7 +148,7 @@ public class WordList {
     public static void main(String[] args) {
         // System.out.println("Test WordList");
 
-         WordList L = new WordList();
+          WordList L = new WordList();
 
         // In.init();
         // long startTime = System.currentTimeMillis();
@@ -148,10 +157,11 @@ public class WordList {
         //     if (s.isEmpty()) continue;
         //     L.insert(s);
         // }
-        L.insert("the");
-        L.insert("adventures");
-        L.insert("of");
-        L.insert("of");
+        L.insert("Hello");
+        L.insert("im");
+        L.insert("me");
+        L.insert("me");
+
         L.print(3);
         // long endTime = System.currentTimeMillis();
         // long listTime = endTime - startTime;
