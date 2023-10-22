@@ -81,24 +81,60 @@ public class WordList {
         // Sort if needed
         if(!isSorted){
             while(currentNode.previous != null && currentNode.count > currentNode.previous.count){
-                if(currentNode.next == null && currentNode.previous == first){
+                if (currentNode.previous == null) {
                     System.out.println("Entered 1st if");
-                    currentNode.next = currentNode.previous;
-                    currentNode.next.previous = currentNode;
-                    first = currentNode;
+                    Node temp = currentNode.next;
+                
+                    if (temp != null) {
+                        temp.previous = null;
+                    } else {
+                        // currentNode was the last element, update the tail
+                        tail = null;
+                    }
+                
+                    first = temp;
+                    if (temp != null) {
+                        temp.next = currentNode;
+                    }
+                
                     currentNode.previous = null;
-                    currentNode.next.next = null;
+                
                     continue;
                 }
+                
+                
+                
 
-                if(currentNode.next == null){
-                    currentNode.previous.next = currentNode.next;
-                    currentNode.next = currentNode.previous;
-                    currentNode.next.next.previous = currentNode.next;
-                    currentNode.previous.previous = currentNode;
-                    currentNode.previous = null;
+                if (currentNode.next == null) {
+                    System.out.println("Entered 2nd if");
+                    System.out.println();
+                    Node temp = currentNode.previous;
+                    System.out.println("Current node is: " + currentNode.str);
+                    System.out.println("Previous Node is " + currentNode.previous.str);
+                    System.out.println();
+                
+                    // Swap the pointers
+                    temp.next = currentNode.next;
+                    currentNode.previous = temp.previous;
+                
+                    if (temp.previous != null) {
+                        temp.previous.next = currentNode;
+                    }
+                
+                    currentNode.next = temp;
+                    
+                    // Update the next node's previous pointer
+                    if (currentNode.next != null) {
+                        currentNode.next.previous = currentNode;
+                    }
+                
+                    System.out.println("Current node after swapping is: " + currentNode.str);
+                    System.out.println("Previous node after swapping is " + currentNode.previous.str);
+                    System.out.println(currentNode.next.str);
+                    System.out.println();
                     continue;
                 }
+                
     
                 if(currentNode.previous.previous == null){
                     currentNode.previous.next = currentNode.next;
@@ -158,9 +194,9 @@ public class WordList {
         //     L.insert(s);
         // }
         L.insert("Hello");
+        L.insert("Kouki");
         L.insert("im");
-        L.insert("me");
-        L.insert("me");
+        L.insert("im");
 
         L.print(3);
         // long endTime = System.currentTimeMillis();
